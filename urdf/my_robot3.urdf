@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="myRobot">
+
+    <material name="blue">
+        <color rgba="0 0 1 1" />
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <link name="basefootprint"></link>
+
+    <joint name="base_to_footprint_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
+        <parent link="basefootprint" />
+        <child link="base_link" />
+    </joint>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.5" length="1.3" />
+            </geometry>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.9" />
+            <material name="blue">
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.5" length="1.3" />
+            </geometry>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.9" />
+        </collision>
+        <inertial>
+            <mass value="10.0" />   
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+    <link name="head_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.5" />
+            </geometry>
+            <material name="white">
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.5" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+    <joint name="base_to_head_joint" type="fixed">
+        <origin xyz="0.0 0.0 1.5" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="head_link" />
+    </joint>
+
+    <link name="head_left_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+    <joint name="base_to_head_left_joint" type="fixed">
+        <origin xyz="-0.17 0.5 1.7" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="head_left_link" />
+    </joint>
+
+
+    <link name="head_right_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+
+    </link>
+
+    <joint name="base_to_head_right_joint" type="fixed">
+        <origin xyz="0.17 0.5 1.7" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="head_right_link" />
+    </joint>
+
+    <link name="back_leg_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.2" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.2" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+    <joint name="base_to_leg_joint" type="fixed">
+        <origin xyz="0.0 -0.3 0.2" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="back_leg_link" />
+    </joint>
+
+    <link name="back_leg_base_link">
+        <visual>
+            <geometry>
+                <box size="0.5 0.1 0.1" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.5 0.1 0.1" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+
+    </link>
+
+    <joint name="leg_to_leg_base_joint" type="fixed">
+        <origin xyz="0.0 0.0 -0.08" rpy="0.0 0.0 0.0" />
+        <parent link="back_leg_link" />
+        <child link="back_leg_base_link" />
+    </joint>
+
+    <link name="right_wheel_link">
+        <visual>
+            
+            <pose relative_to='__model__'>0.0 0 0.0 0 0 0</pose>
+
+            <geometry>
+                <cylinder radius="0.12" length="0.12" />
+            </geometry>
+            <material name="white"></material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.12" length="0.12" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+
+    <joint name="leg_base_to_right_wheel_joint" type="continuous">
+        <parent link="back_leg_base_link" />
+        <child link="right_wheel_link" />
+        <origin xyz="0.3 0.0 0.0" rpy="0.0 1.57075 0.0" />
+        <axis xyz="0.0 0.0 1.0" />
+
+    </joint>
+
+    <link name="left_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.12" length="0.12" />
+            </geometry>
+            <material name="white"></material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.12" length="0.12" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+
+    <joint name="leg_base_to_left_wheel_joint" type="continuous">
+        <parent link="back_leg_base_link" />
+        <child link="left_wheel_link" />
+        <origin xyz="-0.3 0.0 0.0" rpy="0.0 1.57075 0.0" />
+        <axis xyz="0.0 0.0 1.0" />
+
+    </joint>
+
+    <link name="front_leg_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.2" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.2" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+
+    <joint name="base_to_front_leg_joint" type="fixed">
+        <origin xyz="0.0 0.3 0.2" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="front_leg_link" />
+    </joint>
+
+    <link name="caster_wheels_link">
+        <inertial>
+            <mass value="2.0"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <visual name="">
+            <geometry>
+                <sphere radius="0.13"/>
+            </geometry>            
+            <material name="white"></material>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.13"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="front_leg_to_caster_joint" type="fixed">
+        <origin xyz="0.0 0.0 -0.09" rpy="0.0 0.0 0.0"/>
+        <parent link="front_leg_link"/>
+        <child link="caster_wheels_link"/>
+    </joint>
+</robot>    
