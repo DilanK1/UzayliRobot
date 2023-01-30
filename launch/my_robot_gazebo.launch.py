@@ -10,21 +10,28 @@ def generate_launch_description():
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
     default_model_path = os.path.join(pkg_share, 'urdf/my_robot3.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz/my_robot.rviz')
-    world_path = os.path.join(pkg_share, 'world/my_world.sdf')
+    world_path = os.path.join(pkg_share, 'world/worldd.sdf')
    
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}]
+        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}
+        ]
     )
 
     joint_state_publisher_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}]
-       
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])},{'use_sim_time': LaunchConfiguration('use_sim_time')}]
     )
+
+    # diff_node = Node(
+    #     package='diff_drive_controller',
+    #     node_executable='diff_drive_controller_node',
+    #     node_name='diff_drive_controller',
+    #     parameters=[{'tf_prefix': 'my_robot'}],
+    # )
 
     rviz_node = Node(
         package='rviz2',
@@ -34,6 +41,7 @@ def generate_launch_description():
         arguments=['-d', LaunchConfiguration('rvizconfig')],
     )
 
+    # Robotu gazeboya aktarmak için
     spawn_entity =Node(
     	package='gazebo_ros', 
     	executable='spawn_entity.py',
@@ -41,13 +49,13 @@ def generate_launch_description():
         output='screen'
     )
 
-    robot_localization_node = launch_ros.actions.Node(
-         package='robot_localization',
-         executable='ekf_node',
-         name='ekf_filter_node',
-         output='screen',
-         parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    )
+    # robot_localization_node = launch_ros.actions.Node(
+    #      package='robot_localization',
+    #      executable='ekf_node',
+    #      name='ekf_filter_node',
+    #      output='screen',
+    #      parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    # )
 
     return launch.LaunchDescription([
 
@@ -61,8 +69,9 @@ def generate_launch_description():
         spawn_entity,
         robot_state_publisher_node,
         joint_state_publisher_node,
-        robot_localization_node,
-        rviz_node
+        # robot_localization_node,
+        rviz_node,
+        # diff_node
     ])
 
     # gzserver = IncludeLaunchDescription(

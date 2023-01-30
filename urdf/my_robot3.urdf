@@ -9,14 +9,19 @@
         <color rgba="1 1 1 1" />
     </material>
 
-    <link name="basefootprint"></link>
+    <material name="black">
+        <color rgba="0 0 0 0" />
+    </material>
 
+
+    <link name="base_footprint"></link>
     <joint name="base_to_footprint_joint" type="fixed">
         <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
-        <parent link="basefootprint" />
+        <parent link="base_footprint" />
         <child link="base_link" />
     </joint>
 
+    <!-- BASE LINK -->
     <link name="base_link">
         <visual>
             <geometry>
@@ -33,11 +38,18 @@
             <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.9" />
         </collision>
         <inertial>
-            <mass value="10.0" />   
+            <mass value="10.0" />
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
     </link>
 
+    <gazebo reference="base_link">
+        <material>
+            Gazebo/Blue
+        </material>
+    </gazebo>
+
+    <!-- HEAD LİNK -->
     <link name="head_link">
         <visual>
             <geometry>
@@ -56,12 +68,49 @@
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
     </link>
+    <gazebo reference="head_link">
+        <material>
+            Gazebo/White
+        </material>
+    </gazebo>
 
     <joint name="base_to_head_joint" type="fixed">
         <origin xyz="0.0 0.0 1.5" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="head_link" />
     </joint>
+
+    <!-- HEAD RIGHT EYE -->
+    <link name="head_right_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.1" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.5" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </link>
+    <gazebo reference="head_right_link">
+        <material>
+            Gazebo/Red
+        </material>
+    </gazebo>
+
+
+    <joint name="base_to_head_right_joint" type="fixed">
+        <origin xyz="-0.17 -0.5 1.7" rpy="0.0 0.0 0.0" />
+        <parent link="base_link" />
+        <child link="head_right_link" />
+    </joint>
+
+    <!-- HEAD LEFT EYE -->
 
     <link name="head_left_link">
         <visual>
@@ -80,37 +129,19 @@
         </inertial>
     </link>
 
+    <gazebo reference="head_left_link">
+        <material>
+            Gazebo/Red
+        </material>
+    </gazebo>
+
     <joint name="base_to_head_left_joint" type="fixed">
-        <origin xyz="-0.17 0.5 1.7" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.17 -0.5 1.7" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="head_left_link" />
     </joint>
 
-
-    <link name="head_right_link">
-        <visual>
-            <geometry>
-                <sphere radius="0.1" />
-            </geometry>
-        </visual>
-        <collision>
-            <geometry>
-                <sphere radius="0.1" />
-            </geometry>
-        </collision>
-        <inertial>
-            <mass value="0.5" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
-        </inertial>
-
-    </link>
-
-    <joint name="base_to_head_right_joint" type="fixed">
-        <origin xyz="0.17 0.5 1.7" rpy="0.0 0.0 0.0" />
-        <parent link="base_link" />
-        <child link="head_right_link" />
-    </joint>
-
+    <!-- BACK LEG LINK -->
     <link name="back_leg_link">
         <visual>
             <geometry>
@@ -127,13 +158,20 @@
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
     </link>
+    <gazebo reference="back_leg_link">
+        <material>
+            Gazebo/White
+        </material>
+    </gazebo>
 
-    <joint name="base_to_leg_joint" type="fixed">
-        <origin xyz="0.0 -0.3 0.2" rpy="0.0 0.0 0.0" />
+
+    <joint name="base_to_back_leg_joint" type="fixed">
+        <origin xyz="0.0 0.3 0.2" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="back_leg_link" />
     </joint>
 
+    <!-- BACK LEG BASE LINK -->
     <link name="back_leg_base_link">
         <visual>
             <geometry>
@@ -152,15 +190,16 @@
 
     </link>
 
-    <joint name="leg_to_leg_base_joint" type="fixed">
+    <joint name="back_leg_to_leg_base_joint" type="fixed">
         <origin xyz="0.0 0.0 -0.08" rpy="0.0 0.0 0.0" />
         <parent link="back_leg_link" />
         <child link="back_leg_base_link" />
     </joint>
 
-    <link name="right_wheel_link">
+    <!-- LEFT WHEEL LINK -->
+    <link name="left_wheel_link">
         <visual>
-            
+
             <pose relative_to='__model__'>0.0 0 0.0 0 0 0</pose>
 
             <geometry>
@@ -179,16 +218,22 @@
         </inertial>
     </link>
 
+    <gazebo reference="left_wheel_link">
+        <material>
+            Gazebo/Black
+        </material>
+    </gazebo>
 
-    <joint name="leg_base_to_right_wheel_joint" type="continuous">
-        <parent link="back_leg_base_link" />
-        <child link="right_wheel_link" />
-        <origin xyz="0.3 0.0 0.0" rpy="0.0 1.57075 0.0" />
+    <joint name="base_to_left_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="left_wheel_link" />
+        <origin xyz="0.3 0.3 0.11" rpy="0.0 1.57075 0.0" />
         <axis xyz="0.0 0.0 1.0" />
 
     </joint>
 
-    <link name="left_wheel_link">
+    <!-- RIGHT WHEEL LINK -->
+    <link name="right_wheel_link">
         <visual>
             <geometry>
                 <cylinder radius="0.12" length="0.12" />
@@ -205,16 +250,27 @@
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
     </link>
+    <gazebo reference="right_wheel_link">
+        <material>
+            Gazebo/Black
+        </material>
+        <mu1 value="0.5" />
+        <mu2 value="0.5" />
+        <mu3 value="0.5" />
+    </gazebo>
 
-
-    <joint name="leg_base_to_left_wheel_joint" type="continuous">
-        <parent link="back_leg_base_link" />
-        <child link="left_wheel_link" />
-        <origin xyz="-0.3 0.0 0.0" rpy="0.0 1.57075 0.0" />
+    <joint name="base_to_right_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="right_wheel_link" />
+        <origin xyz="-0.3 0.3 0.11" rpy="0.0 1.57075 0.0" />
         <axis xyz="0.0 0.0 1.0" />
+        <!-- <limit effort="100.0" velocity="100.0" />
+        <dynamics damping="0.0"
+        friction="0.5" /> -->
 
     </joint>
 
+    <!-- FRONT LEG LINK -->
     <link name="front_leg_link">
         <visual>
             <geometry>
@@ -231,34 +287,147 @@
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
     </link>
+    <gazebo reference="front_leg_link">
+        <material>
+            Gazebo/White
+        </material>
+    </gazebo>
 
     <joint name="base_to_front_leg_joint" type="fixed">
-        <origin xyz="0.0 0.3 0.2" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.0 -0.3 0.2" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="front_leg_link" />
     </joint>
 
-    <link name="caster_wheels_link">
+    <!-- CASTER WHEEL LINK -->
+    <link name="caster_wheel_link">
         <inertial>
-            <mass value="2.0"/>
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+            <mass value="2.0" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
         </inertial>
         <visual name="">
             <geometry>
-                <sphere radius="0.13"/>
-            </geometry>            
+                <sphere radius="0.12" />
+            </geometry>
             <material name="white"></material>
         </visual>
         <collision>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>0.0</mu>
+                    </ode>
+                </friction>
+            </surface>
             <geometry>
-                <sphere radius="0.13"/>
+                <sphere radius="0.12" />
             </geometry>
         </collision>
     </link>
 
+    <gazebo reference="caster_wheel_link">
+        <material>
+            Gazebo/Black
+        </material>
+        <mu1 value="0.0" />
+        <mu2 value="0.0" />
+    </gazebo>
+
     <joint name="front_leg_to_caster_joint" type="fixed">
-        <origin xyz="0.0 0.0 -0.09" rpy="0.0 0.0 0.0"/>
-        <parent link="front_leg_link"/>
-        <child link="caster_wheels_link"/>
+        <origin xyz="0.0 0.0 -0.09" rpy="0.0 0.0 0.0" />
+        <parent link="front_leg_link" />
+        <child link="caster_wheel_link" />
     </joint>
+
+ <!-- LIDAR LINK -->
+
+ <link name="lidar_link">
+    <inertial>
+        <mass value="0.5"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+        <geometry>
+            <box size="0.2 0.2 0.15"/>
+        </geometry>
+        <material name="white"></material>
+
+    </visual>
+    <collision>
+        <geometry>
+            <box size="0.3 0.3 0.3"/>
+        </geometry>
+    </collision>
+</link>
+
+<joint name="base_to_lidar_joint" type="fixed">
+    <origin xyz="0.0 -0.6 0.25" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+</joint>
+
+
+<!-- Diff Drive -->
+
+    <gazebo>
+        <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+            <!-- Wheel Information -->
+            <left_joint>base_to_left_wheel_joint</left_joint>
+            <right_joint>base_to_right_wheel_joint</right_joint>
+            <wheel_separation>0.6</wheel_separation>
+            <wheel_diameter>0.12</wheel_diameter>
+
+            <!-- Output -->
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>base_footprint</robot_base_frame>
+
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>false</publish_wheel_tf>
+
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+            <update_rate>30</update_rate>
+            <joint_name>base_to_left_wheel_joint</joint_name>
+            <joint_name>base_to_right_wheel_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+<!-- LIDAR -->
+
+    <gazebo reference="lidar_link">
+        <sensor name="laser" type="ray">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-3.14</min_angle>
+                        <max_angle>3.14</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.3</min>
+                    <max>10</max>
+                    <resolution>0.01</resolution>
+                </range>
+            </ray>
+            <plugin name="laser_controller" filename = "libgazebo_ros_ray_sensor.so">
+                <ros>
+                    <argument>~/out:=scan</argument>
+                </ros>
+                <output_type>sensor_msgs/LaserScan</output_type>
+                <frame_name>laser_frame</frame_name>
+            </plugin>
+        </sensor>        
+    </gazebo>
+
+
 </robot>    
