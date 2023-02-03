@@ -42,3 +42,46 @@ def generate_launch_description():
         gazebo,
         spawn_entity,
     ])
+
+    # gzserver = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
+    #     ),
+    #     launch_arguments={'world': world_path}.items(),
+    # )
+
+    # gzclient = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
+    #     ),
+    # )
+
+
+    # map_server = Node(
+    #     package = 'nav2_map_server',
+    #     executable = 'map_saver_server',
+    #     name = 'map_server',
+    #     emulate_tty=False,
+    #     parameters=[{'save_map_timeout': 2000},
+    #                     {'free_thresh_default': 0.25},
+    #                     {'occupied_thresh_default': 0.65}]
+
+    # )
+    # start_lifecycle_manager_cmd = launch_ros.actions.Node(
+    #         package='nav2_lifecycle_manager',
+    #         executable='lifecycle_manager',
+    #         name='lifecycle_manager',
+    #         output='screen',
+    #         emulate_tty=False, 
+    #         parameters=[{'use_sim_time': True},
+    #                     {'autostart': True},
+    #                     {'node_names': lifecycle_nodes}])
+
+    # slam_node = launch_ros.actions.Node(
+    #     package = 'slam_toolbox',
+    #     executable = 'async_slam_toolbox_node',
+    #     name = 'slam',
+    #     output ='screen',
+    #     parameters = [{'map_file_name': '/home/dilan/foxy_ws/my_map_serial','use_sim_time': LaunchConfiguration('use_sim_time')}]
+    #     # parameters=[os.path.join(pkg_share, 'config/mapper_params_online_async.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    # ) 

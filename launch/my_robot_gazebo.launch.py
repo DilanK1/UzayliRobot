@@ -1,9 +1,13 @@
 import os
 import launch
 from launch.substitutions import Command, LaunchConfiguration
+from launch.actions import IncludeLaunchDescription
 from launch_ros.actions import Node
 import launch_ros
 from launch.actions import ExecuteProcess
+from ament_index_python.packages import get_package_share_directory
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
 
 def generate_launch_description():
 
@@ -11,6 +15,9 @@ def generate_launch_description():
     default_model_path = os.path.join(pkg_share, 'urdf/my_robot3.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz/my_robot.rviz')
     world_path = os.path.join(pkg_share, 'world/worldd.sdf')
+
+    # map_file = "/home/dilan/foxy_ws/my_map_save"
+    # my_map=os.path.join(pkg,'config','mapper_params_online_async.yaml')
    
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -49,13 +56,25 @@ def generate_launch_description():
         output='screen'
     )
 
-    # robot_localization_node = launch_ros.actions.Node(
-    #      package='robot_localization',
-    #      executable='ekf_node',
-    #      name='ekf_filter_node',
-    #      output='screen',
-    #      parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    # )
+    robot_localization_node = launch_ros.actions.Node(
+         package='robot_localization',
+         executable='ekf_node',
+         name='ekf_filter_node',
+         output='screen',
+         parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': 'true'}]
+    )
+
+    launch_file_dir = os.path.join(get_package_share_directory('slam_toolbox'),'launch')
+    params_file_dir = os.path.join(pkg_share,'config/mapper_params_online_async.yaml')
+
+    print(params_file_dir)
+
+    slam_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/online_async_launch.py']),
+        launch_arguments = {'use_sim_time' : 'true', 'params_file' : params_file_dir}.items(),
+
+    )
+
 
     return launch.LaunchDescription([
 
@@ -69,20 +88,7 @@ def generate_launch_description():
         spawn_entity,
         robot_state_publisher_node,
         joint_state_publisher_node,
-        # robot_localization_node,
         rviz_node,
-        # diff_node
+        slam_launch,
     ])
 
-    # gzserver = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
-    #     ),
-    #     launch_arguments={'world': world_path}.items(),
-    # )
-
-    # gzclient = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
-    #     ),
-    # )
