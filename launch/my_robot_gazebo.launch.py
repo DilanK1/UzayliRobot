@@ -1,12 +1,10 @@
 import os
 import launch
-from launch.substitutions import Command, LaunchConfiguration
 from launch.actions import IncludeLaunchDescription
-from launch_ros.actions import Node
 import launch_ros
-from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
@@ -14,67 +12,43 @@ def generate_launch_description():
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
     default_model_path = os.path.join(pkg_share, 'urdf/my_robot3.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz/my_robot.rviz')
-    world_path = os.path.join(pkg_share, 'world/worldd.sdf')
 
-    # map_file = "/home/dilan/foxy_ws/my_map_save"
-    # my_map=os.path.join(pkg,'config','mapper_params_online_async.yaml')
-   
-    robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}
-        ]
-    )
-
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])},{'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    )
-
-    # diff_node = Node(
-    #     package='diff_drive_controller',
-    #     node_executable='diff_drive_controller_node',
-    #     node_name='diff_drive_controller',
-    #     parameters=[{'tf_prefix': 'my_robot'}],
-    # )
-
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='screen',
-        arguments=['-d', LaunchConfiguration('rvizconfig')],
-    )
-
-    # Robotu gazeboya aktarmak için
-    spawn_entity =Node(
-    	package='gazebo_ros', 
-    	executable='spawn_entity.py',
-        arguments=['-entity', 'my_robot', '-topic', '/robot_description'],
-        output='screen'
-    )
-
-    robot_localization_node = launch_ros.actions.Node(
-         package='robot_localization',
-         executable='ekf_node',
-         name='ekf_filter_node',
-         output='screen',
-         parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': 'true'}]
-    )
-
-    launch_file_dir = os.path.join(get_package_share_directory('slam_toolbox'),'launch')
+    launch_file_dir = os.path.join(get_package_share_directory('my_robot'),'launch')
+    slam_launch_file_dir = os.path.join(get_package_share_directory('slam_toolbox'),'launch')
     params_file_dir = os.path.join(pkg_share,'config/mapper_params_online_async.yaml')
 
-    print(params_file_dir)
-
     slam_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_file_dir, '/online_async_launch.py']),
+        PythonLaunchDescriptionSource([slam_launch_file_dir, '/online_async_launch.py']),
         launch_arguments = {'use_sim_time' : 'true', 'params_file' : params_file_dir}.items(),
-
     )
 
+    rviz_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/rviz.launch.py'])
+    )
+
+    gazebo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/gazebo.launch.py'])
+    )
+
+    map_server = Node(
+        package = 'nav2_map_server',
+        executable = 'map_saver_server',
+        name = 'map_server',
+        emulate_tty=False,
+        parameters=[{'save_map_timeout': 2000},
+                        {'free_thresh_default': 0.25},
+                        {'occupied_thresh_default': 0.65}]
+
+    )
+    start_lifecycle_manager_cmd = launch_ros.actions.Node(
+            package='nav2_lifecycle_manager',
+            executable='lifecycle_manager',
+            name='lifecycle_manager',
+            output='screen',
+            emulate_tty=False, 
+            parameters=[{'use_sim_time': 'True'},
+                        {'autostart': 'True'},
+                        {'node_names': 'my_map_save'}])
 
     return launch.LaunchDescription([
 
@@ -84,11 +58,10 @@ def generate_launch_description():
                                             description='Absolute path to rviz config file'),
         launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),
-        ExecuteProcess(cmd=['gazebo', '--verbose', world_path,'-s', 'libgazebo_ros_factory.so'], output='screen'),
-        spawn_entity,
-        robot_state_publisher_node,
-        joint_state_publisher_node,
-        rviz_node,
+        gazebo_launch,
+        rviz_launch,
+        # map_server,
+        # start_lifecycle_manager_cmd
         slam_launch,
     ])
 
