@@ -5,7 +5,8 @@ import launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
@@ -36,15 +37,17 @@ def generate_launch_description():
 
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
-        
+    
     amcl = Node(
         package='nav2_amcl',
         executable='amcl',
         name='amcl',
         output='screen',
-        parameters=[os.path.join(pkg_share, 'config', 'nav2_params.yaml')],
-        remappings=remappings
+        parameters=[
+                    {'use_sim_time' : use_sim_time}], #{'use_sim_time' : use_sim_time}
+        # remappings=remappings
     )
+
 
     map_server = Node(
         package = 'nav2_map_server',
