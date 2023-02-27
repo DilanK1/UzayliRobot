@@ -21,7 +21,7 @@
 
     <link name="base_footprint"></link>
     <joint name="base_to_footprint_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
         <parent link="base_footprint" />
         <child link="base_link" />
     </joint>
@@ -32,7 +32,7 @@
             <geometry>
                 <cylinder radius="0.5" length="1.3" />
             </geometry>
-            <origin xyz="0.0 0.0 0.9" rpy="0.0 0.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.9" />
             <material name="blue">
             </material>
         </visual>
@@ -40,7 +40,7 @@
             <geometry>
                 <cylinder radius="0.5" length="1.3" />
             </geometry>
-            <origin xyz="0.0 0.0 0.9" rpy="0.0 0.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.9" />
         </collision>
         <inertial>
             <mass value="10.0" />
@@ -110,7 +110,7 @@
 
 
     <joint name="base_to_head_right_joint" type="fixed">
-        <origin xyz="0.5 -0.17 1.7" rpy="0.0 0.0 0.0" />
+        <origin xyz="-0.17 -0.5 1.7" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="head_right_link" />
     </joint>
@@ -141,7 +141,7 @@
     </gazebo>
 
     <joint name="base_to_head_left_joint" type="fixed">
-        <origin xyz="0.5 0.17 1.7" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.17 -0.5 1.7" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="head_left_link" />
     </joint>
@@ -171,7 +171,7 @@
 
 
     <joint name="base_to_back_leg_joint" type="fixed">
-        <origin xyz="-0.3 0.0 0.2" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.0 0.3 0.2" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="back_leg_link" />
     </joint>
@@ -196,7 +196,7 @@
     </link>
 
     <joint name="back_leg_to_leg_base_joint" type="fixed">
-        <origin xyz="0.0 0.0 -0.08" rpy="0.0 0.0 1.57075" />
+        <origin xyz="0.0 0.0 -0.08" rpy="0.0 0.0 0.0" />
         <parent link="back_leg_link" />
         <child link="back_leg_base_link" />
     </joint>
@@ -204,14 +204,15 @@
     <!-- LEFT WHEEL LINK -->
     <link name="left_wheel_link">
         <visual>
-            <origin xyz="0 0 0" rpy="1.57075 0 0" />
+
+            <pose relative_to='__model__'>0.0 0 0.0 0 0 0</pose>
+
             <geometry>
                 <cylinder radius="0.12" length="0.12" />
             </geometry>
             <material name="white"></material>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="1.57075 0 0" />
             <geometry>
                 <cylinder radius="0.12" length="0.12" />
             </geometry>
@@ -231,22 +232,20 @@
     <joint name="base_to_left_wheel_joint" type="continuous">
         <parent link="base_link" />
         <child link="left_wheel_link" />
-        <origin xyz="-0.3 0.3 0.11" rpy="0 0 0"/>   <!--4.71239  -->
-        <axis xyz="0.0 1.0 0.0" />
+        <origin xyz="-0.3 0.3 0.11" rpy="1.57075 0 0.0" />
+        <axis xyz="0.0 0.0 1.0" />
 
     </joint>
 
     <!-- RIGHT WHEEL LINK -->
     <link name="right_wheel_link">
         <visual>
-            <origin xyz="0 0 0" rpy="1.57075 0 0" />
             <geometry>
                 <cylinder radius="0.12" length="0.12" />
             </geometry>
             <material name="white"></material>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="1.57075 0 0" />
             <geometry>
                 <cylinder radius="0.12" length="0.12" />
             </geometry>
@@ -268,8 +267,8 @@
     <joint name="base_to_right_wheel_joint" type="continuous">
         <parent link="base_link" />
         <child link="right_wheel_link" />
-        <origin xyz="-0.3 -0.3 0.11" rpy="0 0 0" />
-        <axis xyz="0.0 1.0 0.0" />
+        <origin xyz="-0.3 0.3 0.11" rpy="0.0 1.57075 0.0" />
+        <axis xyz="0.0 0.0 1.0" />
     </joint>
 
     <!-- FRONT LEG LINK -->
@@ -296,7 +295,7 @@
     </gazebo>
 
     <joint name="base_to_front_leg_joint" type="fixed">
-        <origin xyz="0.3 0.0 0.2" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.0 -0.3 0.2" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="front_leg_link" />
     </joint>
@@ -396,7 +395,7 @@
     </link>
 
     <joint name="base_to_lidar_joint" type="fixed">
-        <origin xyz="0.6 0.0 0.25" rpy="0.0 0.0 0.0" />
+        <origin xyz="0.0 -0.6 0.25" rpy="0.0 0.0 0.0" />
         <parent link="base_link" />
         <child link="lidar_link" />
     </joint>
@@ -415,8 +414,8 @@
                         <resolution>0.017</resolution> -->
                         <samples>720</samples> 
                         <resolution>1</resolution>
-                        <min_angle>-1.75</min_angle>
-                        <max_angle>1.75</max_angle>
+                        <min_angle>-3.49</min_angle>
+                        <max_angle>0.35</max_angle>
                     </horizontal>
                 </scan>
                 <range>

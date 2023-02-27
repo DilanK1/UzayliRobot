@@ -30,25 +30,39 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_file_dir, '/gazebo.launch.py'])
     )
 
+    use_sim_time = 'true'
+    lifecycle_nodes = ['map_server', 'amcl']
+    autostart = True
+
+    remappings = [('/tf', 'tf'),
+                  ('/tf_static', 'tf_static')]
+        
+    amcl = Node(
+        package='nav2_amcl',
+        executable='amcl',
+        name='amcl',
+        output='screen',
+        parameters=[os.path.join(pkg_share, 'config', 'nav2_params.yaml')],
+        remappings=remappings
+    )
+
     map_server = Node(
         package = 'nav2_map_server',
-        executable = 'map_saver_server',
+        executable = 'map_server',
         name = 'map_server',
-        emulate_tty=False,
-        parameters=[{'save_map_timeout': 2000},
-                        {'free_thresh_default': 0.25},
-                        {'occupied_thresh_default': 0.65}]
-
+        parameters=[{'yaml_filename': '/home/dilan/foxy_ws/my_map_save.yaml'},
+                    {'use_sim_time' : use_sim_time}]
     )
+
     start_lifecycle_manager_cmd = launch_ros.actions.Node(
-            package='nav2_lifecycle_manager',
-            executable='lifecycle_manager',
-            name='lifecycle_manager',
-            output='screen',
-            emulate_tty=False, 
-            parameters=[{'use_sim_time': 'True'},
-                        {'autostart': 'True'},
-                        {'node_names': 'my_map_save'}])
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time},
+                    {'autostart': autostart},
+                    {'node_names': lifecycle_nodes}])
+
 
     return launch.LaunchDescription([
 
@@ -60,8 +74,9 @@ def generate_launch_description():
                                             description='Flag to enable use_sim_time'),
         gazebo_launch,
         rviz_launch,
-        # map_server,
-        # start_lifecycle_manager_cmd
-        slam_launch,
+        map_server,
+        amcl,
+        start_lifecycle_manager_cmd,
+        # slam_launch,
     ])
 
