@@ -12,16 +12,12 @@ def generate_launch_description():
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
     default_model_path = os.path.join(pkg_share, 'urdf/my_robot3.urdf')
-    default_rviz_config_path = os.path.join(pkg_share, 'rviz/my_robot.rviz')
 
     launch_file_dir = os.path.join(get_package_share_directory('my_robot'),'launch')
-    slam_launch_file_dir = os.path.join(get_package_share_directory('slam_toolbox'),'launch')
-    params_file_dir = os.path.join(pkg_share,'config/mapper_params_online_async.yaml')
 
     slam_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([slam_launch_file_dir, '/online_async_launch.py']),
-        launch_arguments = {'use_sim_time' : 'true', 'params_file' : params_file_dir}.items(),
-    )
+        PythonLaunchDescriptionSource([launch_file_dir, '/slam_toolbox.launch.py'])
+    ) 
 
     rviz_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([launch_file_dir, '/rviz.launch.py'])
@@ -31,55 +27,38 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_file_dir, '/gazebo.launch.py'])
     )
 
-    use_sim_time = 'true'
-    lifecycle_nodes = ['map_server', 'amcl']
-    autostart = True
+    map_server_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/map_server.launch.py'])
+    )
 
-    remappings = [('/tf', 'tf'),
-                  ('/tf_static', 'tf_static')]
+    amcl_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/amcl.launch.py'])
+    )
+
+    # robot_localization_file_path = os.path.join(get_package_share_directory(
+    #     'my_robot'), 'config/ekf.yaml')
     
-    amcl = Node(
-        package='nav2_amcl',
-        executable='amcl',
-        name='amcl',
-        output='screen',
-        parameters=[
-                    {'use_sim_time' : use_sim_time}], #{'use_sim_time' : use_sim_time}
-        # remappings=remappings
-    )
-
-
-    map_server = Node(
-        package = 'nav2_map_server',
-        executable = 'map_server',
-        name = 'map_server',
-        parameters=[{'yaml_filename': '/home/dilan/foxy_ws/my_map_save.yaml'},
-                    {'use_sim_time' : use_sim_time}]
-    )
-
-    start_lifecycle_manager_cmd = launch_ros.actions.Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager',
-        output='screen',
-        parameters=[{'use_sim_time': use_sim_time},
-                    {'autostart': autostart},
-                    {'node_names': lifecycle_nodes}])
+    # robot_localization_node = Node(
+    #     package='robot_localization',
+    #     executable='ekf_node',
+    #     name='ekf_filter_node',
+    #     output='screen',
+    #     parameters=[robot_localization_file_path,
+    #                 {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    # )
 
 
     return launch.LaunchDescription([
 
         launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
                                             description='Absolute path to robot urdf file'),
-        launch.actions.DeclareLaunchArgument(name='rvizconfig', default_value=default_rviz_config_path,
-                                            description='Absolute path to rviz config file'),
         launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                             description='Flag to enable use_sim_time'),
         gazebo_launch,
         rviz_launch,
-        map_server,
-        amcl,
-        start_lifecycle_manager_cmd,
+        map_server_launch,
+        amcl_launch,
         # slam_launch,
+        # robot_localization_node
     ])
 
