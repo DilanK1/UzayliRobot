@@ -10,16 +10,17 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
 
+    pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
+    map_path = os.path.join(pkg_share, 'maps', 'my_map_save.yaml')
 
     lifecycle_nodes = ['map_server']
     autostart = True
-
 
     map_server = Node(
         package = 'nav2_map_server',
         executable = 'map_server',
         name = 'map_server',
-        parameters=[{'yaml_filename': '/home/dilan/foxy_ws/my_map_save.yaml'},
+        parameters=[{'yaml_filename': map_path},
                     {'use_sim_time' : LaunchConfiguration('use_sim_time')}]
     )
 

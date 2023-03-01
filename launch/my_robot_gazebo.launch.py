@@ -35,18 +35,6 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([launch_file_dir, '/amcl.launch.py'])
     )
 
-    # robot_localization_file_path = os.path.join(get_package_share_directory(
-    #     'my_robot'), 'config/ekf.yaml')
-    
-    # robot_localization_node = Node(
-    #     package='robot_localization',
-    #     executable='ekf_node',
-    #     name='ekf_filter_node',
-    #     output='screen',
-    #     parameters=[robot_localization_file_path,
-    #                 {'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    # )
-
 
     return launch.LaunchDescription([
 
@@ -59,6 +47,5 @@ def generate_launch_description():
         map_server_launch,
         amcl_launch,
         # slam_launch,
-        # robot_localization_node
     ])
 
