@@ -8,7 +8,7 @@ import launch_ros
 def generate_launch_description():
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')    
-    rviz_config_file = os.path.join(pkg_share, 'rviz/my_robot.rviz')
+    rviz_config_file = os.path.join(pkg_share, 'rviz/amr_mini.rviz')
 
     # joint_state_publisher_gui_node = Node(
     #     package='joint_state_publisher_gui',

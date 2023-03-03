@@ -2595,10 +2595,10 @@
       <pose>-3.76058 3.24732 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>6363 847000000</sim_time>
-      <real_time>308 20540738</real_time>
-      <wall_time>1675061330 478319120</wall_time>
-      <iterations>307287</iterations>
+      <sim_time>0</sim_time>
+      <real_time>0</real_time>
+      <wall_time>0</wall_time>
+      <iterations>0</iterations>
       <model name='Dumpster'>
         <pose>7.46837 -2.23036 0.051372 0 -5e-06 -1.5436</pose>
         <scale>1 1 1</scale>

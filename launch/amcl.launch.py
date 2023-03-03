@@ -1,3 +1,4 @@
+
 import os
 import launch
 from launch.actions import IncludeLaunchDescription
@@ -11,10 +12,8 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
     
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
-
     lifecycle_nodes = ['amcl']
     autostart = True
-
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
     
@@ -23,10 +22,10 @@ def generate_launch_description():
         executable='amcl',
         name='amcl',
         output='screen',
-        parameters=[os.path.join(pkg_share, 'config', 'nav2_params.yaml')], #os.path.join(pkg_share, 'config', 'nav2_params.yaml'), {'use_sim_time' : use_sim_time}
+        parameters=[os.path.join(pkg_share, 'config', 'localization.yaml')],# {'use_sim_time' : use_sim_time}
         # remappings=remappings
     )
-
+    
     start_lifecycle_manager_cmd = launch_ros.actions.Node(
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
@@ -35,11 +34,8 @@ def generate_launch_description():
         parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')},
                     {'autostart': autostart},
                     {'node_names': lifecycle_nodes}])
-
-
+    
     return launch.LaunchDescription([
-
         amcl,
         start_lifecycle_manager_cmd,
     ])
-

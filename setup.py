@@ -13,12 +13,22 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+         (os.path.join('share', package_name+'/my_robot'), glob('my_robot/*')), 
         (os.path.join('share', package_name+'/launch'), glob('launch/*.py')), 
         (os.path.join('share',package_name+'/urdf'),glob('urdf/*')),
         (os.path.join('share',package_name+'/rviz'),glob('rviz/*')),  
         (os.path.join('share',package_name+'/world'),glob('world/*')),                      
         (os.path.join('share',package_name+'/config'),glob('config/*')),                    
-        (os.path.join('share',package_name+'/maps'),glob('maps/*'))
+        (os.path.join('share',package_name+'/maps'),glob('maps/*')),                 
+        (os.path.join('share',package_name+'/models/amr_mini'),glob('models/amr_mini/*')),  
+
+        (os.path.join('share', package_name+'/urdf_amr'),
+         glob('urdf_amr/*.xacro')),
+        (os.path.join('share', package_name+'/urdf_amr'),
+         glob('urdf_amr/*.urdf')),
+        (os.path.join('share',package_name+'/urdf_amr/urdf_include'),glob('urdf_amr/urdf_include/*')),  
+        (os.path.join('share', package_name+'/AmrMini_models/Amr_mini/meshes'),
+         glob('AmrMini_models/Amr_mini/meshes/*')),   
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -29,6 +39,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+                'initialpose_pub=my_robot.initialpose:main',
             
         ],
     },

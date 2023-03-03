@@ -32,11 +32,8 @@ def generate_launch_description():
         parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')},
                     {'autostart': autostart},
                     {'node_names': lifecycle_nodes}])
-
-
+    
     return launch.LaunchDescription([
-
         map_server,
         start_lifecycle_manager_cmd,
     ])
-
