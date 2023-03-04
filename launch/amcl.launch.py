@@ -10,7 +10,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
-    
+    # asdknaskdajksdnjak
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
     lifecycle_nodes = ['amcl']
     autostart = True
