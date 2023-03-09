@@ -53,17 +53,23 @@ def generate_launch_description():
             [launch_file_dir, '/initialpose.launch.py'])
     )
 
+    nav2_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [launch_file_dir, '/nav2.launch.py'])
+    )
+
     return launch.LaunchDescription([
 
-        launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
-                                             description='Absolute path to robot urdf file'),
-        launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='true',
-                                             description='Flag to enable use_sim_time'),
-        gazebo_launch,
-        rviz_launch,
-        map_server_launch,
-        merge_laser_launch,
-        amcl_launch,
-        initialpose_launch,
-        # slam_launch,
-    ])
+            launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
+                                                description='Absolute path to robot urdf file'),
+            launch.actions.DeclareLaunchArgument(name='use_sim_time', default_value='true',
+                                                description='Flag to enable use_sim_time'),
+            gazebo_launch,
+            rviz_launch,
+            map_server_launch,
+            merge_laser_launch,
+            amcl_launch,
+            initialpose_launch,
+            nav2_launch
+            # slam_launch,
+        ])

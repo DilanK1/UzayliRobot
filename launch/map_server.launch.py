@@ -11,7 +11,7 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
 
     pkg_share = launch_ros.substitutions.FindPackageShare(package='my_robot').find('my_robot')
-    map_path = os.path.join(pkg_share, 'maps', 'my_map_save.yaml')
+    map_path = os.path.join(pkg_share, 'maps', 'my_walls_map_save.yaml')
 
     lifecycle_nodes = ['map_server']
     autostart = True

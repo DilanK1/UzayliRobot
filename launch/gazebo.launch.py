@@ -13,11 +13,11 @@ import xacro
 
 def generate_launch_description():
 
-    pkg_share = launch_ros.substitutions.FindPackageShare(
-        package='my_robot').find('my_robot')
-    world_path = os.path.join(pkg_share, 'world/my_world.sdf')
+    # pkg_share = launch_ros.substitutions.FindPackageShare(
+    #     package='my_robot').find('my_robot')
+    # world_path = os.path.join(pkg_share, 'world/my_world.sdf')
 
-    world_file_name = 'my_world.model'
+    world_file_name = 'walls.model'
     world = os.path.join(get_package_share_directory(
         'my_robot'), 'world', world_file_name)
 
@@ -57,15 +57,15 @@ def generate_launch_description():
     )
 
     # Robotu gazeboya aktarmak için
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-entity', 'my_robot', '-topic', '/robot_description'],
-        output='screen'
-    )
+    # spawn_entity = Node(
+    #     package='gazebo_ros',
+    #     executable='spawn_entity.py',
+    #     arguments=['-entity', 'my_robot', '-topic', '/robot_description'],
+    #     output='screen'
+    # )
 
-    gazebo = ExecuteProcess(
-        cmd=['gazebo', '--verbose', world_path, '-s', 'libgazebo_ros_factory.so'], output='screen')
+    # gazebo = ExecuteProcess(
+    #     cmd=['gazebo', '--verbose', world_path, '-s', 'libgazebo_ros_factory.so'], output='screen')
 
     return launch.LaunchDescription([
 

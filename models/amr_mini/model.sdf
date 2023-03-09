@@ -1,4 +1,5 @@
-<sdf version='1.7'>
+<?xml version="1.0" ?>
+<sdf version='1.5'>
   <model name='AmrRobot'>
     <link name='base_footprint'>
       <inertial>
@@ -23,10 +24,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -40,10 +41,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -57,10 +58,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -74,10 +75,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -91,10 +92,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -255,15 +256,16 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -272,7 +274,8 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -325,10 +328,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -348,7 +351,7 @@
         </material>
       </visual>
     </link>
-    <joint name='back_lidar_joint' type='revolute'>
+    <joint name='back_lidar_joint' type='fixed'>
       <pose relative_to='base_footprint'>-0.34 -0.22 0.27 -0 0 -2.98451</pose>
       <parent>base_footprint</parent>
       <child>back_lidar_laser_link</child>
@@ -388,10 +391,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -483,15 +486,16 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -500,7 +504,8 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -553,10 +558,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -615,15 +620,16 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -632,7 +638,8 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -685,10 +692,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -708,7 +715,7 @@
         </material>
       </visual>
     </link>
-    <joint name='front_lidar_joint' type='revolute'>
+    <joint name='front_lidar_joint' type='fixed'>
       <pose relative_to='base_footprint'>0.34 0.22 0.27 0 -0 0</pose>
       <parent>base_footprint</parent>
       <child>front_lidar_laser_link</child>
@@ -748,10 +755,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -843,15 +850,16 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -860,7 +868,8 @@
         <geometry>
           <mesh>
             <scale>1 1 0.9</scale>
-            <uri>file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
+            <uri>
+              file:///home/dilan/foxy_ws/src/my_robot/AmrMini_models/Amr_mini/meshes/caster_wheel_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -913,10 +922,10 @@
         </geometry>
         <surface>
           <contact>
-            <ode/>
+            <ode />
           </contact>
           <friction>
-            <ode/>
+            <ode />
           </friction>
         </surface>
       </collision>
@@ -1038,6 +1047,7 @@
         </geometry>
       </visual>
     </link>
+
     <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
       <update_rate>30</update_rate>
       <left_joint>left_wheel_joint</left_joint>
@@ -1048,13 +1058,14 @@
       <max_wheel_acceleration>10</max_wheel_acceleration>
       <command_topic>cmd_vel</command_topic>
       <cmd_vel_timeout>0.5</cmd_vel_timeout>
-      <publish_odom>1</publish_odom>
-      <publish_odom_tf>1</publish_odom_tf>
-      <publish_wheel_tf>0</publish_wheel_tf>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
       <odometry_topic>odom</odometry_topic>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_footprint</robot_base_frame>
     </plugin>
+
     <plugin name='basic_joint_state' filename='libgazebo_ros_joint_state_publisher.so'>
       <ros>
         <remapping>~/out:=joint_states</remapping>
@@ -1074,23 +1085,23 @@
     <frame name='camera_joint' attached_to='base_link'>
       <pose>-0.465 0 0.284 0 -0 3.14159</pose>
     </frame>
-    <frame name='camera' attached_to='camera_joint'/>
+    <frame name='camera' attached_to='camera_joint' />
     <frame name='imu_joint' attached_to='base_link'>
       <pose>-0.38 0 0.07 0 -0 3.14159</pose>
     </frame>
-    <frame name='imu' attached_to='imu_joint'/>
+    <frame name='imu' attached_to='imu_joint' />
     <frame name='left_motor_joint' attached_to='base_link'>
       <pose>0 -0.223 0 0 -0 3.14159</pose>
     </frame>
-    <frame name='left_motor' attached_to='left_motor_joint'/>
+    <frame name='left_motor' attached_to='left_motor_joint' />
     <frame name='right_motor_joint' attached_to='base_link'>
       <pose>0 0.223 0 0 -0 0</pose>
     </frame>
-    <frame name='right_motor' attached_to='right_motor_joint'/>
+    <frame name='right_motor' attached_to='right_motor_joint' />
     <frame name='base_link_joint' attached_to='base_footprint'>
       <pose>0 0 0.08 0 0 3.14159</pose>
     </frame>
-    <frame name='base_link' attached_to='base_link_joint'/>
+    <frame name='base_link' attached_to='base_link_joint' />
     <slip1>1.0</slip1>
     <slip2>1.0</slip2>
     <slip1>1.0</slip1>

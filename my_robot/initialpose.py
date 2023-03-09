@@ -21,8 +21,8 @@ class InitialPosePublisher(Node):
         pose_msg.header.frame_id = 'map'
 
         # Set the initial pose
-        pose_msg.pose.pose.position.x = 0.0
-        pose_msg.pose.pose.position.y = 0.0
+        pose_msg.pose.pose.position.x = -5.0
+        pose_msg.pose.pose.position.y = 5.0
         pose_msg.pose.pose.position.z = 0.0
         pose_msg.pose.pose.orientation.x = 0.0
         pose_msg.pose.pose.orientation.y = 0.0
