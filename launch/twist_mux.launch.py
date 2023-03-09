@@ -15,20 +15,12 @@ def generate_launch_description():
     twist_mux_node= Node(
         package= 'twist_mux',
         executable= 'twist_mux',
-        parameters= [twist_mux_params ,{'use_sim_time' : LaunchConfiguration('use_sim_time')}],
-        remappings= [('/cmd_vel_out', '/diff_cont/cmd_vel_unstamped')]
+        parameters= [{twist_mux_params},{'use_sim_time' : LaunchConfiguration('use_sim_time')}],
+        remappings= [('/cmd_vel_out', '/cmd_vel')]
     )
 
-    twist_stamper_node = Node(
-        package= 'twist_stamper',
-        executable='twist_stamper',
-        parameters= [{'use_sim_time':  LaunchConfiguration('use_sim_time')}],
-        remappings= [('/cmd_vel_in','/cmd_vel'),
-                     '/cmd_vel_out','/diff_cont/cmd_vel']
-    )
 
     return launch.LaunchDescription([
 
-        # twist_mux_node,
-        twist_stamper_node
+        twist_mux_node,
     ])

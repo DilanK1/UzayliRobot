@@ -76,6 +76,6 @@ def generate_launch_description():
             amcl_launch,
             initialpose_launch,
             nav2_launch,
-            # twist_mux_launch
+            twist_mux_launch
             # slam_launch,
         ])
