@@ -58,6 +58,11 @@ def generate_launch_description():
             [launch_file_dir, '/nav2.launch.py'])
     )
 
+    twist_mux_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [launch_file_dir, '/twist_mux.launch.py'])
+    )
+
     return launch.LaunchDescription([
 
             launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
@@ -70,6 +75,7 @@ def generate_launch_description():
             merge_laser_launch,
             amcl_launch,
             initialpose_launch,
-            nav2_launch
+            nav2_launch,
+            # twist_mux_launch
             # slam_launch,
         ])
