@@ -52,6 +52,11 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             [launch_file_dir, '/initialpose.launch.py'])
     )
+    
+    goalpose_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [launch_file_dir, '/goal_pose.launch.py'])
+    )
 
     nav2_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -71,11 +76,12 @@ def generate_launch_description():
                                                 description='Flag to enable use_sim_time'),
             gazebo_launch,
             rviz_launch,
-            map_server_launch,
             merge_laser_launch,
+            map_server_launch,
             amcl_launch,
-            initialpose_launch,
             nav2_launch,
-            twist_mux_launch
+            initialpose_launch,
+            twist_mux_launch,
+            goalpose_launch
             # slam_launch,
         ])

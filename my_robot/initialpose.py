@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
+import time 
 
 class InitialPosePublisher(Node):
     def __init__(self):
@@ -21,8 +22,8 @@ class InitialPosePublisher(Node):
         pose_msg.header.frame_id = 'map'
 
         # Set the initial pose
-        pose_msg.pose.pose.position.x = -5.0
-        pose_msg.pose.pose.position.y = 5.0
+        pose_msg.pose.pose.position.x = -6.0
+        pose_msg.pose.pose.position.y = 22.0
         pose_msg.pose.pose.position.z = 0.0
         pose_msg.pose.pose.orientation.x = 0.0
         pose_msg.pose.pose.orientation.y = 0.0
@@ -33,6 +34,8 @@ class InitialPosePublisher(Node):
         pose_msg.pose.covariance[35] = 0.06853891945200942
 
         # Publish the message
+        time.sleep(2)
+
         self.publisher_.publish(pose_msg)
         rclpy.shutdown()
 

@@ -41,7 +41,7 @@ setup(
     entry_points={
         'console_scripts': [
                 'initialpose_pub=my_robot.initialpose:main',
-            
+                'goalpose_pub=my_robot.goal_pose:main',
         ],
     },
 )

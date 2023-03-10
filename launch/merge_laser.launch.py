@@ -1,35 +1,23 @@
 
 import os
-import launch
-from launch_ros.actions import Node
-import launch_ros
-from launch.actions import ExecuteProcess
-from launch.substitutions import Command, LaunchConfiguration
-from ament_index_python.packages import get_package_share_directory
-from launch.actions import IncludeLaunchDescription
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-import xacro
+from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
+    laser_relay_share = get_package_share_directory('laser_relay')
 
-    launch_file_dir = os.path.join(
-        get_package_share_directory('merge_laser'), 'launch')
-
-    merge_laser = Node(
-        package='merge_laser',
-        executable='merge_laser_scan',
-        output='screen',
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
-        arguments={'front_lidar_amr_mini_laser', 'back_lidar_amr_mini_laser'}
+    laser_relay_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(laser_relay_share, 'launch',
+                         'laser_relay.launch.py'),
+        )
     )
-
-    merge_laser_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_file_dir, '/merge_laser.launch.py'])
-    )
-    
-    
-    return launch.LaunchDescription([
-        merge_laser
-        # merge_laser_launch
+    return LaunchDescription([
+        DeclareLaunchArgument(name="topic_in1", default_value="/front_lidar_amr_mini_laser"),
+        DeclareLaunchArgument(name="topic_in2", default_value="/back_lidar_amr_mini_laser"),
+        DeclareLaunchArgument(name="topic_out", default_value="/scan"),
+        laser_relay_launch
     ])
